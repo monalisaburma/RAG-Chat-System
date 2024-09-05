@@ -6,7 +6,6 @@ load_dotenv()
 
 def initialize_pinecone(api_key, index_name):
     api_key = os.getenv("PINECONE_API_KEY")  # Ensure your .env has the correct Pinecone API key
-    environment = os.getenv("PINECONE_ENVIRONMENT")  # Add this to your .env file
     pc = Pinecone(api_key=api_key)  # Initialize Pinecone with your API key
     index = pc.Index(index_name)  # Use the index you already created in the Pinecone dashboard
     return index
