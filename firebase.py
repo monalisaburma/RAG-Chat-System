@@ -12,16 +12,26 @@ def initialize_firebase():
     return db
 
 def add_document(db, chat_name, pinecone_index):
-    doc_ref = db.collection('documents').add({
-        'chat_name': chat_name,
-        'pinecone_index': pinecone_index
-    })
-    return doc_ref
+    try:
+        doc_ref = db.collection('documents').add({
+            'chat_name': chat_name,
+            'pinecone_index': pinecone_index
+        })
+        return doc_ref
+    except Exception as e:
+        print(f"Error uploading to Firestore: {e}")
+        return None
+
+
 
 def get_document_by_chat_name(db, chat_name):
     docs = db.collection('documents').where('chat_name', '==', chat_name).stream()
     doc_data = None
     for doc in docs:
+        print(f"Found document: {doc.id}")
         doc_data = doc.to_dict()
         break
     return doc_data
+
+
+
