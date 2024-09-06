@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-
 # Function to generate embeddings using Google Gemini API
 def generate_embeddings(text):
     try:
@@ -31,7 +30,8 @@ def generate_embeddings(text):
     except Exception as e:
         print(f"Error generating embeddings with Google Gemini: {e}")
         return None
-    
+
+# Function to generate responses using Google Gemini API
 def generate_gemini_response(document_text, question):
     try:
         # Load the API key from environment variables
@@ -42,14 +42,12 @@ def generate_gemini_response(document_text, question):
         # Initialize the Google Gemini client with your API key
         genai.configure(api_key=API_KEY)
 
-        # Use the PaLM 2 (Legacy) model for text generation
-        result = genai.generate_text(
-            model="models/text-bison-001",  # Use this model for text generation
-            prompt=f"{document_text}\n\nQuestion: {question}"
-        )
+        # Use the generative model for text generation (example using Gemini 1.5 Flash)
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(f"{document_text}\n\nQuestion: {question}")
 
         # Return the generated response
-        return result.result  # Adjust according to the API response structure
+        return response.text
     
     except Exception as e:
         print(f"Error generating response from Google Gemini: {e}")

@@ -58,7 +58,6 @@ def upload_document():
 
 
 # API 2: Document Querying and Guardrails
-# API 2: Document Querying and Guardrails
 @app.route('/query_document', methods=['POST'])
 def query_document():
     if 'chat_name' not in request.form or 'question' not in request.form:
@@ -95,10 +94,6 @@ def query_document():
     except Exception as e:
         print(f"Error querying document: {e}")
         return jsonify({"error": str(e)}), 500
-
-
-
-
 
 
 # Run the Flask app
